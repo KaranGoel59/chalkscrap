@@ -1,0 +1,37 @@
+{
+  "name": "chalkscrap",
+  "version": "1.0.0",
+  "description": "scrapper for chalkpad",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "babel-node ./src",
+    "build": "npx babel src --out-dir dist --ignore 'node_modules/**/*' --copy-files",
+    "watch": "npx nodemon --exec babel-node ./src",
+    "start": "node dist"
+  },
+  "keywords": [],
+  "author": "KaranGoel59",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KaranGoel59/chalkscrap.git"
+  },
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "puppeteer": "^1.20.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "eslint": "^6.5.1",
+    "nodemon": "^1.19.3"
+  }
+}
