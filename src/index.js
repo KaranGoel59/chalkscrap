@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 
-import {studentRoutes} from '@app/routes';
+import {chalkPadRoutes} from '@app/routes';
 
 import {ENV} from '@app/config';
 import app from './app';
@@ -15,5 +15,9 @@ if (NODE_ENV == 'development') {
     app.express.use(logger('dev'));
 }
 
-app.mountRoutes(studentRoutes);
-app.start(PORT);
+(async () => {
+    await app.startBrowser();
+
+    app.mountScrapper(chalkPadRoutes);
+    app.start(PORT);
+})();

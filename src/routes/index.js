@@ -1,1 +1,1 @@
-export {studentRoutes} from './_student.routes';
+export {chalkPadRoutes} from './_chalkPad.routes';

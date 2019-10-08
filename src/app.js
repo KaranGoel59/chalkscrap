@@ -1,4 +1,5 @@
 import express from 'express';
+import puppeteer from 'puppeteer';
 
 import { errorHandler, undefinedRoute } from  '@app/middlewares';
 
@@ -6,10 +7,15 @@ class App {
     constructor() {
         this.express = express();
         this.router = express.Router();
+        this.browser = null;
     }
 
-    mountRoutes(routes) {
-        routes(this.router);
+    mountScrapper(routes) {
+        routes(this.router, this.browser);
+    }
+
+    async startBrowser() {
+        this.browser = await puppeteer.launch({devtools: true}); 
     }
 
     start(port) {

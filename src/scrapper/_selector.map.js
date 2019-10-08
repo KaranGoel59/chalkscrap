@@ -17,8 +17,15 @@ const courseInfo = {
     xurl: "https://hp.chitkara.edu.in//Library/ScParent/scAjaxSection.php",
 }
 
+const timetable = {
+    tab: "#tabTabdhtmlgoodies_tabView1_4",
+    xurl: "https://hp.chitkara.edu.in//Library/ScParent/scAjaxStudentTimeTable.php",
+    days: "tr:nth-child(n+2):nth-last-child(n+2) > td:nth-child(n+2):nth-last-child(n+3)"
+}
+
 export default {
     studentLogin,
     studentInfo,
-    courseInfo
+    courseInfo,
+    timetable
 }

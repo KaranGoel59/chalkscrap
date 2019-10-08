@@ -1,1 +1,1 @@
-export { getStudentInfo } from './_chalkpad.scrapper' 
+export { ChalkPad } from './_chalkpad.scrapper' 
