@@ -9,6 +9,7 @@ const studentInfo = {
     lastName: "#tabViewdhtmlgoodies_tabView1_0 > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(6)",
     id: "#tabViewdhtmlgoodies_tabView1_0 > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(3)",
     email: "#tabViewdhtmlgoodies_tabView1_0 > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(6) > td:nth-child(3)",
+    gender: "#tabViewdhtmlgoodies_tabView1_0 > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(5) > td:nth-child(6)",
     image: "#studentImageId1"
 }
 
@@ -18,9 +19,8 @@ const courseInfo = {
 }
 
 const timetable = {
-    tab: "#tabTabdhtmlgoodies_tabView1_4",
-    xurl: "https://hp.chitkara.edu.in//Library/ScParent/scAjaxStudentTimeTable.php",
-    days: "tr:nth-child(n+2):nth-last-child(n+2) > td:nth-child(n+2):nth-last-child(n+3)"
+    url: "https://hp.chitkara.edu.in//Interface/Student/scTimeTable.php",
+    days: "tr:nth-child(n+2):nth-last-child(n+3) > .timtd:nth-child(n+2):nth-last-child(n+2)"
 }
 
 export default {

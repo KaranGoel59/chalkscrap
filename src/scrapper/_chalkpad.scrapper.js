@@ -13,7 +13,9 @@ export class ChalkPad {
         const browser = this.browser;
         const context = await browser.createIncognitoBrowserContext();
 
-        const indexPage = await context.newPage();
+        const pages = await Promise.all([context.newPage(),context.newPage()])
+        const indexPage = await pages[0];
+        const timetable = await pages[1];
 
         return indexPage.goto(selector.studentLogin.url)
             .then(async () => {
@@ -24,14 +26,14 @@ export class ChalkPad {
                 let data = null
                 if (indexPage.url() === selector.studentLogin.success) {
                     await indexPage.goto(selector.studentInfo.url);
-                    const studentdata = await this.getStudentDetails(indexPage);
-                    const coursedata = await this.getCourseDetails(indexPage);
-                    const timetable = await this.getTimeTable(indexPage);
+                    const studentdetails = await this.getStudentDetails(indexPage);
+                    const studentdata = await Promise.all([this.getCourseDetails(indexPage),
+                                                           this.getTimeTable(timetable)])
 
                     data = {
-                        student : studentdata,
-                        courses : coursedata,
-                        timetable: timetable
+                        student : studentdetails,
+                        courses : studentdata[0],
+                        timetable: studentdata[1]
                     }
                 }
 
@@ -53,12 +55,14 @@ export class ChalkPad {
                 const firstName = $(selector.studentInfo.firstName).text();
                 const lastName = $(selector.studentInfo.lastName).text();
                 const email = $(selector.studentInfo.email).text();
+                const gender = $(selector.studentInfo.gender).text();
                 const image = $(selector.studentInfo.image).attr('src');
     
                 const json = {
                     id: id.trim(),
                     firstName: firstName.trim(),
                     lastName: lastName.trim(),
+                    gender: gender.trim(),
                     email: email.trim(),
                     image: image
                 }
@@ -88,21 +92,33 @@ export class ChalkPad {
     }
 
     async getTimeTable(page) {
-        return page.click(selector.timetable.tab)
-        .then(async () => {
-            const result = await pEvent(page,'response', (response) => {
-                if(response.url() === selector.timetable.xurl) {
-                    return true;
+        return page.goto(selector.timetable.url,{ waitUntil: 'networkidle0' })
+        .then(() => page.content())
+        .then((html) => {
+            const $ = cheerio.load(html);
+            const days = $(selector.timetable.days);
+
+            const week =["monday","tuesday","wednesday","thursday","friday"];
+            const timetable = {};
+
+            let i = 0;
+            let j = 0;
+            let periods = [];
+            days.each(function() {
+                const period = $(this).text().trim();
+                periods.push(period);
+                j++;
+
+                if(j == 8) {
+                    j = 0;
+                    const day = week[i];
+                    timetable[day] = periods;
+                    periods = [];
+                    i++;
                 }
             });
 
-            const html = await result.text();
-            const $ = cheerio.load(html);
-            const days = $(selector.courseInfo.days).each((i,element) => {
-                console.log(element.text());
-            });
-
-            return html;
+            return timetable;
         })
         .catch((err) => {
             throw err;

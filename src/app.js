@@ -15,7 +15,7 @@ class App {
     }
 
     async startBrowser() {
-        this.browser = await puppeteer.launch({devtools: true}); 
+        this.browser = await puppeteer.launch(); 
     }
 
     start(port) {

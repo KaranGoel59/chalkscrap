@@ -3,8 +3,14 @@ import { ChalkPad } from '@app/scrapper';
 export const chalkPadRoutes = (router, browser) => {
     const chalkpad = new ChalkPad(browser);
 
-    router.get('/', async (req, res) => {
-        const data = await chalkpad.getStudentInfo('1711981136','chitkara');
+    router.post('/student', async (req, res) => {
+        const id = req.body.id;
+        const password = req.body.password;
+        const data = await chalkpad.getStudentInfo(id,password);
+        if(data == null) {
+            res.send("Wrong user name or password");
+        } else {
         res.send(data);
+        }
     });
 }
