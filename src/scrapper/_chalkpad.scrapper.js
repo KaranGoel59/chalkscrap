@@ -28,12 +28,12 @@ export class ChalkPad {
                     await indexPage.goto(selector.studentInfo.url);
                     const studentdetails = await this.getStudentDetails(indexPage);
                     const studentdata = await Promise.all([this.getCourseDetails(indexPage),
-                                                           this.getTimeTable(timetable)])
+                                                           this.getSchedule(timetable)])
 
                     data = {
                         student : studentdetails,
                         courses : studentdata[0],
-                        timetable: studentdata[1]
+                        schedule: studentdata[1]
                     }
                 }
 
@@ -91,7 +91,7 @@ export class ChalkPad {
             });
     }
 
-    async getTimeTable(page) {
+    async getSchedule(page) {
         return page.goto(selector.timetable.url,{ waitUntil: 'networkidle0' })
         .then(() => page.content())
         .then((html) => {
@@ -100,13 +100,42 @@ export class ChalkPad {
 
             const week =["monday","tuesday","wednesday","thursday","friday"];
             const timetable = {};
+            const teachers = new Set();
+            const sections = new Set();
 
             let i = 0;
             let j = 0;
             let periods = [];
             days.each(function() {
-                const period = $(this).text().trim();
-                periods.push(period);
+                let info =  $(this).html()
+                            .replace(/<br>/g,' ')
+                            .replace(/<hr>/g,'').trim();
+
+                if(info.substr(-1) == ',') {
+                    info = info.slice(0,-1).replace(', ','|');
+                } else {
+                    info ="";
+                }
+
+                info.split('|')
+                .forEach((value) => {
+                    let arr = value.split(' ');
+
+                    if(arr.length >= 5 ) {
+                        const teacher = `${arr[4]} ${arr[5]} ${arr[0]} Section${arr[1]}`;
+                        const section = `Section${arr[1]}`;
+                        
+                        if(!teachers.has(teacher)) {
+                            teachers.add(teacher);
+                        }
+
+                        if(!sections.has(section)) {
+                            sections.add(section);
+                        }
+                    }
+                })
+
+                periods.push(info);
                 j++;
 
                 if(j == 8) {
@@ -118,7 +147,11 @@ export class ChalkPad {
                 }
             });
 
-            return timetable;
+            return {
+                sections: [...sections],
+                teachers: [...teachers],
+                timetable: timetable
+            };
         })
         .catch((err) => {
             throw err;
