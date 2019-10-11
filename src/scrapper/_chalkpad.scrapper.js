@@ -51,19 +51,19 @@ export class ChalkPad {
         return page.content()
             .then((html) => {
                 const $ = cheerio.load(html);
-                const id = $(selector.studentInfo.id).text();
-                const firstName = $(selector.studentInfo.firstName).text();
-                const lastName = $(selector.studentInfo.lastName).text();
-                const email = $(selector.studentInfo.email).text();
-                const gender = $(selector.studentInfo.gender).text();
+                const id = $(selector.studentInfo.id).text().trim();
+                const firstName = $(selector.studentInfo.firstName).text().trim();
+                const lastName = $(selector.studentInfo.lastName).text().trim();
+                const email = $(selector.studentInfo.email).text().trim();
+                const gender = $(selector.studentInfo.gender).text().trim();
                 const image = $(selector.studentInfo.image).attr('src');
     
                 const json = {
-                    id: id.trim(),
-                    firstName: firstName.trim(),
-                    lastName: lastName.trim(),
-                    gender: gender.trim(),
-                    email: email.trim(),
+                    id: id,
+                    firstName: firstName,
+                    lastName: lastName,
+                    gender: gender,
+                    email: email,
                     image: image
                 }
     
@@ -97,6 +97,7 @@ export class ChalkPad {
         .then((html) => {
             const $ = cheerio.load(html);
             const days = $(selector.timetable.days);
+            const batch = $(selector.timetable.batch).text().replace(/ /g,'').replace('SEM',' SEM');
 
             const week =["monday","tuesday","wednesday","thursday","friday"];
             const timetable = {};
@@ -148,6 +149,7 @@ export class ChalkPad {
             });
 
             return {
+                batch: batch,
                 sections: [...sections],
                 teachers: [...teachers],
                 timetable: timetable

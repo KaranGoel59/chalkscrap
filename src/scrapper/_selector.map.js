@@ -20,7 +20,8 @@ const courseInfo = {
 
 const timetable = {
     url: "https://hp.chitkara.edu.in//Interface/Student/scTimeTable.php",
-    days: "tr:nth-child(n+2):nth-last-child(n+3) > .timtd:nth-child(n+2):nth-last-child(n+2)"
+    days: "tr:nth-child(n+2):nth-last-child(n+3) > .timtd:nth-child(n+2):nth-last-child(n+2)",
+    batch: "#results > div:nth-child(1) > b:nth-child(1)"
 }
 
 export default {
