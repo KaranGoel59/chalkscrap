@@ -1,3 +1,4 @@
+import puppeteer from 'puppeteer';
 import cheerio from 'cheerio';
 import pEvent from 'p-event';
 
@@ -5,13 +6,13 @@ import selector from './_selector.map';
 
 
 export class ChalkPad {
-    constructor(browser) {
-        this.browser = browser;
-    }
 
     async getStudentInfo(username, password) {
-        const browser = this.browser;
-        const context = await browser.createIncognitoBrowserContext();
+        const context = await puppeteer.launch({
+            args: [
+                '--incognito',
+              ]
+        })
 
         const pages = await Promise.all([context.newPage(),context.newPage()])
         const indexPage = await pages[0];
@@ -42,6 +43,7 @@ export class ChalkPad {
                 return data;
             })
             .catch((err) => {
+                context.close();
                 throw err;
             });
     }
@@ -89,6 +91,7 @@ export class ChalkPad {
             .catch((err) => {
                 throw err;
             });
+            
     }
 
     async getSchedule(page) {

@@ -16,7 +16,7 @@ if (NODE_ENV == 'development') {
 }
 
 (async () => {
-    await app.startBrowser();
+    // await app.startBrowser();
 
     app.mountScrapper(chalkPadRoutes);
     app.start(PORT);
