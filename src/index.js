@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 
 import {chalkPadRoutes} from '@app/routes';
+import {chalkPadEvents} from '@app/events';
 
 import {ENV} from '@app/config';
 import app from './app';
@@ -17,7 +18,7 @@ if (NODE_ENV == 'development') {
 
 (async () => {
     // await app.startBrowser();
-
-    app.mountScrapper(chalkPadRoutes);
+    app.mountScrapRoutes(chalkPadRoutes);
+    app.mountScrapEvents(chalkPadEvents);
     app.start(PORT);
 })();

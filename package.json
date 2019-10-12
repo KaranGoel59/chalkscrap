@@ -1,7 +1,7 @@
 {
   "name": "chalkscrap",
   "version": "1.0.0",
-  "description": "scrapper for chalkpad",
+  "description": "Nodejs base scrapper template (scrapper for chalkpad)",
   "main": "src/index.js",
   "scripts": {
     "dev": "babel-node ./src",
@@ -24,7 +24,8 @@
     "p-event": "^4.1.0",
     "p-limit": "^2.2.1",
     "path": "^0.12.7",
-    "puppeteer": "^1.20.0"
+    "puppeteer": "^1.20.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",
