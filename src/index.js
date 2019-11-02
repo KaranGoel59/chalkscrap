@@ -20,5 +20,5 @@ if (NODE_ENV == 'development') {
     // await app.startBrowser();
     app.mountScrapRoutes(chalkPadRoutes);
     app.mountScrapEvents(chalkPadEvents);
-    app.start(PORT);
+    await app.start(PORT);
 })();

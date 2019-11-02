@@ -32,7 +32,7 @@ class App {
         this.browser = await puppeteer.launch(); 
     }
 
-    start(port) {
+    async start(port) {
         const app = this.express;
         const server = this.http;
 
@@ -46,6 +46,7 @@ class App {
             console.log(`🚀 Scrapper ready at ${port}`);
         });
 
+        console.log("work");
         this.io.on('connection', (socket) => {
             console.log(`👤 Client connected`);
 
