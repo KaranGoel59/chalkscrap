@@ -21,9 +21,10 @@ export const chalkPadEvents = (socket) => {
             .then((data) => {
                 if(data == null) {
                     //logic to handle error
+                    console.log("no data scrapped");
                 } else {
                     //logic to save data
-                    //socket.emit()
+                    console.log(data);
                 }
             }))
         );

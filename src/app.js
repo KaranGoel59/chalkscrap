@@ -46,7 +46,6 @@ class App {
             console.log(`🚀 Scrapper ready at ${port}`);
         });
 
-        console.log("work");
         this.io.on('connection', (socket) => {
             console.log(`👤 Client connected`);
 
